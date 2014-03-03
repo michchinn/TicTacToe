@@ -41,13 +41,6 @@ public class TicPanel extends JPanel implements MouseListener{
 			}
 			try{
 				p.getComponent(p.chooseMove()).setBackground(TicTacToeFrame.computerColor);
-				System.out.println(p.chooseMove());
-				if(p.getComputerWin(p)){
-					System.out.println("COMP WIN");
-				}
-				if(p.getHumanWin(p)){
-					System.out.println("HUM WIN");
-				}
 			}
 			catch(Exception ex){}
 		}

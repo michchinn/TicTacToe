@@ -44,8 +44,13 @@ public class OpeningDialog extends JDialog{
 	}
 	
 	public OpeningDialog(){
+		this.setTitle("Tic Tac Toe");
+		ImageIcon icon = new ImageIcon("./images/mainIcon");
 		mainPanel = new JPanel();
-		mainPanel.add(new JLabel("Welcome to Tic-Tac-Toe"));
+		JLabel titleLabel = new JLabel("Welcome to Tic-Tac-Toe");
+		titleLabel.setFont(new Font(Font.SANS_SERIF,Font.BOLD,15));
+		titleLabel.setAlignmentX(CENTER_ALIGNMENT);
+		mainPanel.add(titleLabel);
 		mainPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
 		mainPanel.add(new ColorPanel());
 		mainPanel.add(new JSeparator(SwingConstants.HORIZONTAL));

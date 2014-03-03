@@ -75,10 +75,7 @@ public class TicTacToePanel extends JPanel{
 			}
 			
 		}
-		for( int i = 0; i < 9; i++ ){
-			System.out.print(b[i]);
-		}
-		System.out.println();
+		
 		return b;
 	}
 	public JPanel getPanelFromBoard(char[] b){
@@ -89,24 +86,19 @@ public class TicTacToePanel extends JPanel{
 				c = new JPanel();
 				c.setBackground(Color.WHITE);
 				ret.add(c);
-				System.out.print("WHITE");
 			}
 			else if( b[i] == 'X'){
 				c = new JPanel();
 				c.setBackground(TicTacToeFrame.humanColor);
 				ret.add(c);
-				System.out.print("HUMAN");
 			}
 			else{
 				c = new JPanel();
 				c.setBackground(TicTacToeFrame.computerColor);
 				ret.add(c);
-				System.out.print("COMPUTER");
 			}
-			System.out.print(" ");
 			
 		}
-		System.out.print("\n");
 		return ret;
 	}
 	int chooseMove()
@@ -120,31 +112,33 @@ public class TicTacToePanel extends JPanel{
 		if( numCount == 1 )
 			if( board[0] != '-' || board[2] != '-' || board[6] != '-' ||board[8] != '-' )
 				return 4;
-		{
-			char[] tempBoard = board;
-			for( int i = 0; i < 9; i++ ){
+			
+		char[] tempBoard = new char[9];
+		
+		for( int i = 0; i < 9; i++ ){
+			tempBoard = board;
+			if(tempBoard[i] == '-'){
 				tempBoard[i] = 'O';
 				if(getComputerWin(getPanelFromBoard(tempBoard))){
-					return i;
+					compMove =  i;
 				}
-				tempBoard[i] = board[i];
+				else{
+					tempBoard[i] = '-';
+				}
 			}
+		}
+		
+		if( compMove != -1 ){
+			return compMove;
 		}
 		
 		for( Integer index = 0; index < 9; index++ )
 		{	
-			System.out.println("in loop");
-				char tempBoard[];
 				tempBoard = board;
-				for( int j = 0; j < 9; j++ ){
-					System.out.print(tempBoard[j]);
-				}
-				System.out.print("\n");
 				if( tempBoard[index] == '-' )
 				{
 					tempBoard[index] = 'X';
 					if( getHumanWin(getPanelFromBoard(tempBoard)) ){
-						System.out.println("GOOD");
 						return index;
 
 					}
@@ -153,7 +147,6 @@ public class TicTacToePanel extends JPanel{
 
 		for( int i = 0; i < 9; i++ )
 		{	
-				char tempBoard[];
 				tempBoard = board;
 				if( tempBoard[i] == '-' )
 				{
@@ -168,7 +161,7 @@ public class TicTacToePanel extends JPanel{
 		{
 			for( int j = i + 1; j < 9; j++ )
 			{
-				char[] tempBoard = board;
+				tempBoard = board;
 
 				if( tempBoard[i] == '-' )
 				{
