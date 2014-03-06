@@ -53,6 +53,31 @@ public class TicTacToePanel extends JPanel{
 			return true;
 		return false;
 	}
+	boolean getWin (char board[], char player)
+	{
+		if( board[0] == board[1] && board[1] == board[2] && board[0] == player )
+			return true;
+		if( board[3] == board[4] && board[3] == board[5] && board[3] == player )
+			return true;
+		if( board[6] == board[7] && board[6] == board[8] && board[6] == player )
+			return true;
+		
+		if( board[0] == board[3] && board[0] == board[6] && board[0] == player )
+			return true;
+		if( board[1] == board[4] && board[1] == board[7] && board[1] == player )
+			return true;
+		if( board[2] == board[5] && board[2] == board[8] && board[2] == player )
+			return true;
+
+		if( board[0] == board[4] && board[0] == board[8] && board[0] == player )
+			return true;
+		if( board[2] == board[4] && board[2] == board[6] && board[2] == player )
+			return true;
+
+		return false;
+
+	}
+	
 	public boolean boardIsFull(){
 		boolean full = true;
 		for( int i = 0; i < 9; i++ ){
@@ -101,10 +126,10 @@ public class TicTacToePanel extends JPanel{
 		}
 		return ret;
 	}
-	int chooseMove()
+	int chooseMove( char board[] )
 	{
-		char board[] = getCharBoard();
 		int compMove = -1;
+		
 		int numCount = 0;
 		for( int i = 0; i < 9; i++ )
 			if( board[i] != '-' )
@@ -112,91 +137,159 @@ public class TicTacToePanel extends JPanel{
 		if( numCount == 1 )
 			if( board[0] != '-' || board[2] != '-' || board[6] != '-' ||board[8] != '-' )
 				return 4;
-			
-		char[] tempBoard = new char[9];
 		
-		for( int i = 0; i < 9; i++ ){
-			tempBoard = board;
-			if(tempBoard[i] == '-'){
-				tempBoard[i] = 'O';
-				if(getComputerWin(getPanelFromBoard(tempBoard))){
-					compMove =  i;
-				}
-				else{
-					tempBoard[i] = '-';
-				}
-			}
-		}
-		
-		if( compMove != -1 ){
-			return compMove;
-		}
-		
-		for( Integer index = 0; index < 9; index++ )
-		{	
-				tempBoard = board;
-				if( tempBoard[index] == '-' )
-				{
-					tempBoard[index] = 'X';
-					if( getHumanWin(getPanelFromBoard(tempBoard)) ){
-						return index;
-
-					}
-				}
-		}
 
 		for( int i = 0; i < 9; i++ )
 		{	
-				tempBoard = board;
+				char[] tempBoard = getCharBoard().clone();
+
 				if( tempBoard[i] == '-' )
 				{
 					tempBoard[i] = 'O';
-					if( getComputerWin(getPanelFromBoard(tempBoard)) )
-						return i;
+					if( getWin(tempBoard,'O') )
+						compMove = i;
 				}
 		}
-		
-		if( compMove == -1 )
+
+		if( compMove == -1 ){
 				for( int i = 0; i < 9; i++ )
-		{
-			for( int j = i + 1; j < 9; j++ )
 			{
-				tempBoard = board;
-
-				if( tempBoard[i] == '-' )
+				for( int j = i + 1; j < 9; j++ )
 				{
-					tempBoard[i] = 'X';
-				}
-				if( tempBoard[j] == '-' )
-				{
-					tempBoard[j] ='X';
-				}
-				if( getHumanWin(getPanelFromBoard(tempBoard)) )
-				{
-					tempBoard[j] = board[j];
-					if( getHumanWin(getPanelFromBoard(tempBoard)) )
+					char[] tempBoard = getCharBoard().clone();
+			
+					if( tempBoard[i] == '-' )
 					{
-						compMove = i;
+						tempBoard[i] = 'X';
 					}
-					else
+					if( tempBoard[j] == '-' )
 					{
-						tempBoard[j] = 'X';
-						tempBoard[i] = board[i];
-
-						if( getHumanWin(getPanelFromBoard(tempBoard)) )
+						tempBoard[j] ='X';
+					}
+					if( getWin(tempBoard,'X') )
+					{
+						tempBoard[j] = board[j];
+						if( getWin(tempBoard,'X') )
 						{
-							compMove = j;
+							compMove = i;
 						}
+						else
+						{
+							tempBoard[j] = 'X';
+							tempBoard[i] = board[i];
+							if( getWin(tempBoard,'X') )
+							{
+								compMove = j;
+							}
+						}
+						if( compMove == -1 )
+						{
+							compMove = i;
+						}
+						break;
 					}
-					if( compMove == -1 )
-					{
-						compMove = i;
-					}
-					break;
+	
 				}
 			}
-		}
+		}	
+					
 		return compMove;
-
 	}
 }
+//	int chooseMove()
+//	{
+//		int compMove = -1;
+//		int numCount = 0;
+//		for( int i = 0; i < 9; i++ )
+//			if( getCharBoard()[i] != '-' )
+//				numCount++;
+//		if( numCount == 1 )
+//			if( getCharBoard()[0] != '-' || getCharBoard()[2] != '-' || getCharBoard()[6] != '-' ||getCharBoard()[8] != '-' )
+//				return 4;
+//			
+//		char[] tempBoard = new char[9];
+//		
+//		for( int i = 0; i < 9; i++ ){
+//			tempBoard = getCharBoard();
+//			if(tempBoard[i] == '-'){
+//				tempBoard[i] = 'O';
+//				if(getComputerWin(getPanelFromBoard(tempBoard))){
+//					compMove =  i;
+//				}
+//				else{
+//					tempBoard[i] = '-';
+//				}
+//			}
+//		}
+//		
+//		if( compMove != -1 ){
+//			return compMove;
+//		}
+//		
+//		for( Integer index = 0; index < 9; index++ )
+//		{	
+//				tempBoard = getCharBoard();
+//				if( tempBoard[index] == '-' )
+//				{
+//					tempBoard[index] = 'X';
+//					if( getHumanWin(getPanelFromBoard(tempBoard)) ){
+//						return index;
+//
+//					}
+//				}
+//		}
+//
+//		for( int i = 0; i < 9; i++ )
+//		{	
+//				tempBoard = getCharBoard();
+//				if( tempBoard[i] == '-' )
+//				{
+//					tempBoard[i] = 'O';
+//					if( getComputerWin(getPanelFromBoard(tempBoard)) )
+//						return i;
+//				}
+//		}
+//		
+//		if( compMove == -1 )
+//				for( int i = 0; i < 9; i++ )
+//		{
+//			for( int j = i + 1; j < 9; j++ )
+//			{
+//				tempBoard = getCharBoard();
+//
+//				if( tempBoard[i] == '-' )
+//				{
+//					tempBoard[i] = 'X';
+//				}
+//				if( tempBoard[j] == '-' )
+//				{
+//					tempBoard[j] ='X';
+//				}
+//				if( getHumanWin(getPanelFromBoard(tempBoard)) )
+//				{
+//					tempBoard[j] = getCharBoard()[j];
+//					if( getHumanWin(getPanelFromBoard(tempBoard)) )
+//					{
+//						compMove = i;
+//					}
+//					else
+//					{
+//						tempBoard[j] = 'X';
+//						tempBoard[i] = getCharBoard()[i];
+//
+//						if( getHumanWin(getPanelFromBoard(tempBoard)) )
+//						{
+//							compMove = j;
+//						}
+//					}
+//					if( compMove == -1 )
+//					{
+//						compMove = i;
+//					}
+//					break;
+//				}
+//			}
+//		}
+//		return compMove;
+//
+

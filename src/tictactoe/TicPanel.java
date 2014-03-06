@@ -28,21 +28,49 @@ public class TicPanel extends JPanel implements MouseListener{
 				JOptionPane.showMessageDialog(new JFrame(), "I WIN");
 				JFrame f = (JFrame) p.getParent().getParent().getParent();
 				f.dispose();
+				PlayAgainWindow w = new PlayAgainWindow();
+				return;
 			}
 			if(p.getHumanWin(p)){
 				JOptionPane.showMessageDialog(new JFrame(), "YOU WIN");
 				JFrame f = (JFrame) p.getParent().getParent().getParent();
 				f.dispose();
+				PlayAgainWindow w = new PlayAgainWindow();
+				return;
 			}
 			if(p.boardIsFull()){
-				System.out.println("DONE");
+				JOptionPane.showMessageDialog(new JFrame(), "It's a tie!");
 				JFrame f = (JFrame) p.getParent().getParent().getParent();
 				f.dispose();
+				PlayAgainWindow w = new PlayAgainWindow();
+				return;
 			}
 			try{
-				p.getComponent(p.chooseMove()).setBackground(TicTacToeFrame.computerColor);
+				p.getComponent(p.chooseMove(p.getCharBoard())).setBackground(TicTacToeFrame.computerColor);
 			}
 			catch(Exception ex){}
+			if(p.getComputerWin(p)){
+				JOptionPane.showMessageDialog(new JFrame(), "I WIN");
+				JFrame f = (JFrame) p.getParent().getParent().getParent();
+				f.dispose();
+				PlayAgainWindow w = new PlayAgainWindow();
+				return;
+			}
+			if(p.getHumanWin(p)){
+				JOptionPane.showMessageDialog(new JFrame(), "YOU WIN");
+				JFrame f = (JFrame) p.getParent().getParent().getParent();
+				f.dispose();
+				PlayAgainWindow w = new PlayAgainWindow();
+				return;
+			}
+			if(p.boardIsFull()){
+				JOptionPane.showMessageDialog(new JFrame(), "It's a tie!");
+				JFrame f = (JFrame) p.getParent().getParent().getParent();
+				f.dispose();
+				PlayAgainWindow w = new PlayAgainWindow();
+				return;
+			}
+			
 		}
 		
 	}
@@ -54,5 +82,5 @@ public class TicPanel extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {}
 	@Override
 	public void mouseReleased(MouseEvent e) {}
-
 }
+

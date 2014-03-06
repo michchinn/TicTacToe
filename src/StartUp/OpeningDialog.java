@@ -45,7 +45,6 @@ public class OpeningDialog extends JDialog{
 	
 	public OpeningDialog(){
 		this.setTitle("Tic Tac Toe");
-		ImageIcon icon = new ImageIcon("./images/mainIcon");
 		mainPanel = new JPanel();
 		JLabel titleLabel = new JLabel("Welcome to Tic-Tac-Toe");
 		titleLabel.setFont(new Font(Font.SANS_SERIF,Font.BOLD,15));
@@ -61,16 +60,19 @@ public class OpeningDialog extends JDialog{
 			public void actionPerformed(ActionEvent arg0) {
 				TicTacToeFrame f  = new TicTacToeFrame();
 				
-				if(f.computerColor == null)
-					f.computerColor = Color.RED;
-				if(f.humanColor == null)
-					f.humanColor = Color.BLUE;
+				if(f.computerColor == null){
+					JOptionPane.showMessageDialog(new JFrame(),"Choose a computer color", "ERROR", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(f.humanColor == null){
+					JOptionPane.showMessageDialog(new JFrame(),"Choose a human color", "ERROR", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				if(f.humanColor.equals(f.computerColor)){
-					if(!f.humanColor.equals(Color.RED)){
-						f.humanColor = Color.RED;
+					{
+						JOptionPane.showMessageDialog(new JFrame(),"You and the computer have the same color", "ERROR", JOptionPane.ERROR_MESSAGE);
+						return;
 					}
-					else
-						f.humanColor = Color.BLUE;
 				}
 				f.pack();
 				f.setSize(new Dimension(400,400));

@@ -13,6 +13,7 @@ public class TicTacToeFrame extends JFrame{
 	private TicTacToePanel pan;
 
 	public TicTacToeFrame(){
+		setTitle("Tic-Tac-Toe");
 		turn = 0;
 		pan = new TicTacToePanel();
 		setContentPane(pan);
